@@ -2,20 +2,32 @@ const int DataPin = 4; // SER Pin
 const int ClockPin = 5; // RCLK9 Pin
 const int LatchPin = 6; // SRCLK Pin
 
-//Code without shift register
-  //int pin2 = 2;
-  //int pin3 = 3;
-  //int pin4 = 4;
-  //int pin5 = 5;
-  //int pin6 = 6;
-  //int pin7 = 7;
-  //int timer = 100;
+const int ButtonZero = 12; //Frnech Numbers add to the fun, I solely just       ✨✨ w a n t e d    t o ✨✨ 
+const int ButtonUn = 11; //I started with Zero instead of un to align with the LEDs. The first LED to the left is on Q0, second from the left on Q1 etc. I wanted the button variables names to have some sense of connection.
+const int ButtonDeux = 10;
+const int ButtonTrois = 9;
+const int ButtonQuatre = 8;
+const int ButtonCinq = 7;
+const int ButtonSix = 6;
+const int ButtonSept = 5;
+
+
 
 void setup() {
 pinMode(DataPin, OUTPUT);
 pinMode(ClockPin, OUTPUT);
 pinMode(LatchPin, OUTPUT);
- 
+
+pinMode(ButtonZero, INPUT);
+pinMode(ButtonUn, INPUT);
+pinMode(ButtonDeux, INPUT);
+pinMode(ButtonTrois, INPUT);
+pinMode(ButtonQuatre, INPUT);
+pinMode(ButtonCinq, INPUT);
+pinMode(ButtonSix, INPUT);
+pinMode(ButtonSept, INPUT);
+
+
  digitalWrite(ClockPin, LOW);
  shiftOut(DataPin,LatchPin,MSBFIRST,B10101010); // To check all LEDs replace B1... with '255'.
  digitalWrite(ClockPin, HIGH);
