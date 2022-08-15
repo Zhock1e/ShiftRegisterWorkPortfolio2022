@@ -1,0 +1,35 @@
+const int SER = 4; // Data
+const int RCLK9 = 5; // Register Clock
+const int SRCLK = 6; // Latch
+
+//int pin2 = 2;
+//int pin3 = 3;
+//int pin4 = 4;
+//int pin5 = 5;
+//int pin6 = 6;
+//int pin7 = 7;
+//int timer = 100;
+
+void setup() {
+pinMode(SER, OUTPUT);
+pinMode(RCLK9, OUTPUT);
+pinMode(SRCLK, OUTPUT);
+ 
+ didgitalWrite(RCLK, LOW);
+  shiftOut(SER,SRCLK,MSBFIRST,B10101010);
+  didgitalWrite(RCLK, HIGH);
+ 
+ 
+ 
+ // put your setup code here, to run once:
+//  pinMode(pin2, OUTPUT);
+//  pinMode(pin3, OUTPUT);
+//  pinMode(pin4, OUTPUT);
+//  pinMode(pin5, OUTPUT);
+//  pinMode(pin6, OUTPUT);
+//  pinMode(pin7, OUTPUT);
+}
+
+void loop() {
+
+}
