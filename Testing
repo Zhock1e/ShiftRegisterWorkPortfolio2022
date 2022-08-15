@@ -16,9 +16,9 @@ pinMode(DataPin, OUTPUT);
 pinMode(ClockPin, OUTPUT);
 pinMode(LatchPin, OUTPUT);
  
- didgitalWrite(ClockPin, LOW);
-  shiftOut(DataPin,LatchPin,MSBFIRST,B10101010);
-  didgitalWrite(ClockPin, HIGH);
+ digitalWrite(ClockPin, LOW);
+ shiftOut(DataPin,LatchPin,MSBFIRST,B10101010); // To check all LEDs replace B1... with '255'.
+ digitalWrite(ClockPin, HIGH);
  
  
 //Code without shift register
