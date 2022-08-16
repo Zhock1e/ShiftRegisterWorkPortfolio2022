@@ -1,0 +1,85 @@
+//I have done so so damn many iterations of this and I accidently deleted one iterartion that worked on the arduino coding platform SO I'm gonna use this now 
+
+// *THIS is the functioning singular button inbuilt LED code *
+void setup() {
+  Serial.begin(9600);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  //read the pushbutton value into a variable
+  int sensorVal = digitalRead(2);
+  //print out the value of the pushbutton
+  Serial.println(sensorVal);
+  if (sensorVal == HIGH) {
+    digitalWrite(13, LOW);
+  } else {
+    digitalWrite(13, HIGH);
+  }
+}
+
+
+// Now to make this code lightup a regular output LED
+// WOO IT WORKS :D
+
+const int LED = 9;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(9, OUTPUT);
+}
+
+void loop() {
+  //read the pushbutton value into a variable
+  int sensorVal = digitalRead(2);
+  //print out the value of the pushbutton
+  Serial.println(sensorVal);
+  if (sensorVal == HIGH) {
+    digitalWrite(LED, LOW);
+  } else {
+    digitalWrite(LED, HIGH);
+  }
+}
+
+
+
+// This is just a mess of trying to figure out the code through different iterations :) 
+const int DataType = 4; // SER input Pin
+const int LatchPin = 5; // Output Register clock 
+const int ClockPin = 6; // SRCLR Pin 
+
+const int ButtonUn = 7;
+const int ButtonDeux = 8;
+const int ButtonTrois = 9;
+
+//const int LedUn = 
+//const int LedDeux = 
+
+void setup()
+{
+ // pinMode(DataType,OUPUT);
+ // pinMode(LatchPin,OUPUT);
+ // pinMode(ClockPin,OUPUT);
+  
+  pinMode(7, INPUT_PULLUP);
+  pinMode(LED_BUILTIN, OUTPUT);
+  
+  //digitalWrite(LatchPin, LOW);
+  //shiftOut(DataType,ClockPin,MSBFIRST,B10101010); //Shifting MSB first 
+  //digitalWrite(LatchPin, HIGH) // LatchPin is high releaseing the data
+    
+}
+
+void loop() {
+  int sensorVal = digitalRead(7);
+  Serial.println(sensorVal);
+
+
+  if (sensorVal == HIGH) {
+    digitalWrite(LED_BUILTIN, LOW);
+  } else {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+}
