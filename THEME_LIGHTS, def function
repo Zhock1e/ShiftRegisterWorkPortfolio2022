@@ -1,7 +1,6 @@
 //WOO made it this far.... so far 🎺🎺
-//This code will be testing LEDs turning on when the corresponding button is pressed. code is going to be a lil brute force esk.
-
-
+//I will create a function which plays a specific sequence of LEDs for my THEME_LIGHT points, at the beginning when the Aurdino is first on until a button is pressed. 
+//Also after each time a correct button is pressed.
 
 
 int LatchPin = 5;  // Latch pin of 74HC595 is connected to Digital pin 5
