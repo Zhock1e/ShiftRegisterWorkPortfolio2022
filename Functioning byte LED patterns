@@ -22,22 +22,22 @@ void setup()
  */
 void loop() 
 {
-  leds = 0b00000000; // Initially turns all the LEDs off, by giving the variable 'leds' the value 0
+  LEDs = 0b00000000; // Initially turns all the LEDs off, by giving the variable 'leds' the value 0
   updateShiftRegister();
   Serial.println(LEDs);
   delay(2000);
 
-  leds = 0b11110000;
+  LEDs = 0b11110000;
   updateShiftRegister();
   Serial.println(LEDs);
   delay(2000);
   
-  leds = 0b00001111;
+  LEDs = 0b00001111;
   updateShiftRegister();
   Serial.println(LEDs);
   delay(2000);
   
-  leds = 0b11111111;
+  LEDs = 0b11111111;
   updateShiftRegister();
   Serial.println(LEDs);
   delay(2000);
