@@ -1,0 +1,156 @@
+//WOO made it this far.... so far 🎺🎺
+//This code will be testing LEDs turning on when the corresponding button is pressed. code is going to be a lil brute force esk.
+
+
+
+
+int LatchPin = 5;  // Latch pin of 74HC595 is connected to Digital pin 5
+int ClockPin = 6; // Clock pin of 74HC595 is connected to Digital pin 6
+int DataPin = 4;  // Data pin of 74HC595 is connected to Digital pin 4
+
+const int ButtonZero = 12; 
+const int ButtonUn = 11; 
+const int ButtonDeux = 10;
+const int ButtonTrois = 9;
+const int ButtonQuatre = 8;
+const int ButtonCinq = 7;
+const int ButtonSix = 6;
+const int ButtonSept = 5;
+
+byte LEDs = 0;    // Variable to hold the pattern of which LEDs are currently turned on or off
+
+
+ 
+void setup() 
+{
+  Serial.begin(9600);
+  // Set all the pins of 74HC595 as OUTPUT
+  pinMode(LatchPin, OUTPUT);
+  pinMode(DataPin, OUTPUT);  
+  pinMode(ClockPin, OUTPUT);
+  
+  
+}
+
+void loop() //reoccuring funtion 
+{
+
+LEDs = 0b00000000; // Initially turns all the LEDs off, by giving the variable 'leds' the value 0
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+  
+ LEDs = 0b10000000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11000000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11100000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11110000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11111000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11111100;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11111110;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+  
+LEDs = 0b11111111;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+// ALL LEDs are lit 🔥🔥🔥
+// Now to flash the lights twice then reverse the pattern and play through twice using the for loop, "Theme_Song"
+
+LEDs = 0b00000000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+  
+  LEDs = 0b11111111;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b00000000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11111111;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(200);
+  
+// Now for the reverse
+
+LEDs = 0b11111110;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+  
+ LEDs = 0b11111100;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11111000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11110000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+  
+LEDs = 0b11100000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+LEDs = 0b11000000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+  
+ LEDs = 0b10000000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+ LEDs = 0b00000000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+
+}
+  
+  
+  void updateShiftRegister()
+{
+   digitalWrite(LatchPin, LOW);
+   shiftOut(DataPin, ClockPin, LSBFIRST, LEDs);
+   digitalWrite(LatchPin, HIGH);
+}
