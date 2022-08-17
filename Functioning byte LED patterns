@@ -1,8 +1,8 @@
-int latchPin = 5;  // Latch pin of 74HC595 is connected to Digital pin 5
-int clockPin = 6; // Clock pin of 74HC595 is connected to Digital pin 6
-int dataPin = 4;  // Data pin of 74HC595 is connected to Digital pin 4
+int LatchPin = 5;  // Latch pin of 74HC595 is connected to Digital pin 5
+int ClockPin = 6; // Clock pin of 74HC595 is connected to Digital pin 6
+int DataPin = 4;  // Data pin of 74HC595 is connected to Digital pin 4
 
-byte leds = 0;    // Variable to hold the pattern of which LEDs are currently turned on or off
+byte LEDs = 0;    // Variable to hold the pattern of which LEDs are currently turned on or off
 
 /*
  * setup() - this function runs once when you turn your Arduino on
@@ -12,9 +12,9 @@ void setup()
 {
   Serial.begin(9600);
   // Set all the pins of 74HC595 as OUTPUT
-  pinMode(latchPin, OUTPUT);
-  pinMode(dataPin, OUTPUT);  
-  pinMode(clockPin, OUTPUT);
+  pinMode(LatchPin, OUTPUT);
+  pinMode(DataPin, OUTPUT);  
+  pinMode(ClockPin, OUTPUT);
 }
 
 /*
@@ -24,22 +24,22 @@ void loop()
 {
   leds = 0b00000000; // Initially turns all the LEDs off, by giving the variable 'leds' the value 0
   updateShiftRegister();
-  Serial.println(leds);
+  Serial.println(LEDs);
   delay(2000);
 
   leds = 0b11110000;
   updateShiftRegister();
-  Serial.println(leds);
+  Serial.println(LEDs);
   delay(2000);
   
   leds = 0b00001111;
   updateShiftRegister();
-  Serial.println(leds);
+  Serial.println(LEDs);
   delay(2000);
   
   leds = 0b11111111;
   updateShiftRegister();
-  Serial.println(leds);
+  Serial.println(LEDs);
   delay(2000);
 }
 
@@ -48,7 +48,7 @@ void loop()
  */
 void updateShiftRegister()
 {
-   digitalWrite(latchPin, LOW);
-   shiftOut(dataPin, clockPin, LSBFIRST, leds);
-   digitalWrite(latchPin, HIGH);
+   digitalWrite(LatchPin, LOW);
+   shiftOut(DataPin, ClockPin, LSBFIRST, LEDs);
+   digitalWrite(LatchPin, HIGH);
 }
