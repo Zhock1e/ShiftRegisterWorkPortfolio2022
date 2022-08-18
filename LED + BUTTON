@@ -1,10 +1,6 @@
-//WOO made it this far.... so far 🎺🎺
-//This code will be testing LEDs turning on when the corresponding button is pressed. code is going to be a lil brute force esk.
-  
-
-int LatchPin = 5;  // Latch pin of 74HC595 is connected to Digital pin 5
-int ClockPin = 6; // Clock pin of 74HC595 is connected to Digital pin 6
-int DataPin = 4;  // Data pin of 74HC595 is connected to Digital pin 4
+const int SER = 4; // Data
+const int RCLK = 5; // Register Clock
+const int SRCLK = 6; // Latch
 
 const int ButtonZero = 12; 
 const int ButtonUn = 11; 
@@ -21,53 +17,71 @@ byte LEDs = 0;
 
 void setup() {
 Serial.begin(9600);
-pinMode(DataPin, OUTPUT);
-pinMode(ClockPin, OUTPUT);
-pinMode(LatchPin, OUTPUT);
+  pinMode(SER, OUTPUT);
+  pinMode(RCLK, OUTPUT);
+  pinMode(SRCLK, OUTPUT);
 
-pinMode(ButtonZero, INPUT_PULLUP); 
-pinMode(ButtonUn, INPUT_PULLUP);
-pinMode(ButtonDeux, INPUT_PULLUP);
-pinMode(ButtonTrois, INPUT_PULLUP);
-pinMode(ButtonQuatre, INPUT_PULLUP);
-pinMode(ButtonCinq, INPUT_PULLUP);
-pinMode(ButtonSix, INPUT_PULLUP);
-pinMode(ButtonSept, INPUT_PULLUP);
+  pinMode(ButtonZero, INPUT); 
+  pinMode(ButtonUn, INPUT);
+  pinMode(ButtonDeux, INPUT_PULLUP);
+  pinMode(ButtonTrois, INPUT_PULLUP);
+  pinMode(ButtonQuatre, INPUT_PULLUP);
+  pinMode(ButtonCinq, INPUT_PULLUP);
+  pinMode(ButtonSix, INPUT_PULLUP);
+  pinMode(ButtonSept, INPUT_PULLUP);
+
+
+  // I have made the light sequence run once the arduino is on:
+  int level = 8;
+  int sequence[level] = {5, 1, 0, 7, 2, 4, 6, 2}; // Arbitrary sequence that is challenging and uses all of the LEDs
   
+  shiftOut(SER,SRCLK,MSBFIRST,B00000000); //Set the LEDs blank
+    
+    for (int i = 0; i < level; i++) {
+      byte current_led = 0;
+      bitSet(current_led, sequence[i]);
+      
+      Serial.println(sequence[i]);
+      Serial.println(current_led);
+      Serial.println("");
   
- void setup() 
-{
-  Serial.begin(9600);
-  // Set all the pins of 74HC595 as OUTPUT
-  pinMode(LatchPin, OUTPUT);
-  pinMode(DataPin, OUTPUT);  
-  pinMode(ClockPin, OUTPUT);
+      digitalWrite(RCLK, LOW);
+      shiftOut(SER,SRCLK,MSBFIRST,current_led);
+      digitalWrite(RCLK, HIGH);
+      delay(500);
+      
+    shiftOut(SER,SRCLK,MSBFIRST,B00000000);
+    
+  }
+}
   
  
   
-  
 void loop() 
 {
-  LEDs = 0b00000000; // Initially turns all the LEDs off, by giving the variable 'leds' the value 0
-  updateShiftRegister();
-  Serial.println(LEDs);
-  delay(2000);
-
-  LEDs = 0b11110000;
-  updateShiftRegister();
-  Serial.println(LEDs);
-  delay(2000);
-  
-  LEDs = 0b00001111;
-  updateShiftRegister();
-  Serial.println(LEDs);
-  delay(2000);
-  
-  LEDs = 0b11111111;
-  updateShiftRegister();
-  Serial.println(LEDs);
-  delay(2000);
+   
+shiftOut(SER,SRCLK,MSBFIRST,B00000000);
+   if (ButtonZero == HIGH);
+    digitalWrite(RCLK, LOW);
+    shiftOut(SER,SRCLK,MSBFIRST,B11111111);
+    digitalWrite(RCLK, HIGH);
+    delay(500);
+    shiftOut(SER,SRCLK,MSBFIRST,B00000000);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
  * updateShiftRegister() - This function sets the latchPin to low, then calls the Arduino function 'shiftOut' to shift out contents of variable 'leds' in the shift register before putting the 'latchPin' high again.
