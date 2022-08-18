@@ -9,7 +9,7 @@ void setup() {
   pinMode(SRCLK, OUTPUT);
   
   
-  // I have made the light sequence to run once the arduino is on:
+  // I have made the light sequence run once the arduino is on:
   int level = 8;
   int sequence[level] = {5, 1, 0, 7, 2, 4, 6, 8,3}; // Arbitrary sequence that is challenging and uses all of the LEDs
 
