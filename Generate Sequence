@@ -1,0 +1,40 @@
+const int SER = 4; // Data
+const int RCLK = 5; // Register Clock
+const int SRCLK = 6; // Latch
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(SER, OUTPUT);
+  pinMode(RCLK, OUTPUT);
+  pinMode(SRCLK, OUTPUT);
+  
+  
+  // I have made the light sequence to run once the arduino is on:
+  int level = 8;
+  int sequence[level] = {5, 1, 0, 7, 2, 4, 6, 8,3}; // Arbitrary sequence that is challenging and uses all of the LEDs
+
+
+  shiftOut(SER,SRCLK,MSBFIRST,B00000000); //Set the LEDs blank
+  
+  for (int i = 0; i < level; i++) { //going through each LED in the sequence until the program reaches the level maximum, 8
+    byte current_led = 0;
+    bitSet(current_led, sequence[i]);
+    
+    Serial.println(sequence[i]); // I hav serial Print in the code to make sure my code is functioning properly -
+    Serial.println(current_led); // helpfull during testing when I don't want to keep uploading my Arduino
+    Serial.println("");
+
+    digitalWrite(RCLK, LOW); // Clock is reset
+    shiftOut(SER,SRCLK,MSBFIRST,current_led); // The bit LED data has been shifted into the shift register
+    digitalWrite(RCLK, HIGH); // Clock is high shifting through binary
+    delay(500); //Each LED will be lit for half of a second as the sequence is played.
+    
+  shiftOut(SER,SRCLK,MSBFIRST,B00000000); // Set LEDs blank again
+    
+  }
+}
+
+//Now to the loop.
+
+void loop() 
+{ }
