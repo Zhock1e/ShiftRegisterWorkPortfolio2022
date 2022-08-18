@@ -18,7 +18,12 @@ const int ButtonSept = 5;
 
 byte LEDs = 0;    // Variable to hold the pattern of which LEDs are currently turned on or off
 
-
+void ThemeLight (byte ThemeLEDByte) {
+    updateShiftRegister();
+  Serial.println(LEDs);
+  delay(100);
+  Serial.Println("THEMELIGHT HAS BEEN CALLED"); // Testing whetehr calling the function works, it does :))))
+}  
  
 void setup() 
 {
@@ -143,6 +148,8 @@ LEDs = 0b11000000;
   updateShiftRegister();
   Serial.println(LEDs);
   delay(100);
+
+ThemeLight(0b01010010);
 
 }
   
