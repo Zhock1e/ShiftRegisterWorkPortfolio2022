@@ -1,6 +1,7 @@
 const int SER = 4; // Data
 const int RCLK = 5; // Register Clock
 const int SRCLK = 6; // Latch
+const int SRCLR = 3; // Serial Clear
 
 const int ButtonZero = 12; 
 const int ButtonUn = 11; 
@@ -13,6 +14,14 @@ const int ButtonSept = 5;
 
 byte LEDs = 0;
 
+void LTBL(byte LEDByte) {//Let there be light heh
+    digitalWrite(RCLK, LOW);
+    shiftOut(SER,SRCLK,MSBFIRST,LEDByte);
+    digitalWrite(RCLK, HIGH);
+    delay(500);
+    //Serial.println("LTBL IS BEING CALLED"); //This was to test whether the defined function was being correctly called
+}
+
 
 
 void setup() {
@@ -20,6 +29,7 @@ Serial.begin(9600);
   pinMode(SER, OUTPUT);
   pinMode(RCLK, OUTPUT);
   pinMode(SRCLK, OUTPUT);
+  pinMode(SRCLR, OUTPUT);
 
   pinMode(ButtonZero, INPUT); 
   pinMode(ButtonUn, INPUT);
@@ -30,43 +40,48 @@ Serial.begin(9600);
   pinMode(ButtonSix, INPUT_PULLUP);
   pinMode(ButtonSept, INPUT_PULLUP);
 
-
   // I have made the light sequence run once the arduino is on:
   int level = 8;
   int sequence[level] = {5, 1, 0, 7, 2, 4, 6, 2}; // Arbitrary sequence that is challenging and uses all of the LEDs
-  
   shiftOut(SER,SRCLK,MSBFIRST,B00000000); //Set the LEDs blank
-    
+  
     for (int i = 0; i < level; i++) {
       byte current_led = 0;
       bitSet(current_led, sequence[i]);
       
-      Serial.println(sequence[i]);
-      Serial.println(current_led);
-      Serial.println("");
-  
-      digitalWrite(RCLK, LOW);
-      shiftOut(SER,SRCLK,MSBFIRST,current_led);
-      digitalWrite(RCLK, HIGH);
-      delay(500);
-      
-    shiftOut(SER,SRCLK,MSBFIRST,B00000000);
-    
+    Serial.println(sequence[i]);
+    Serial.println(current_led);
+    Serial.println("");
+
+    LTBL(current_led); //usign the /Let There Be Light/ function I made.
+    LTBL(B00000000);
+
   }
+  
+  digitalWrite(SRCLR, HIGH); // Resets shift register
+  digitalWrite(SRCLR, LOW);
+  Serial.println("VOID SETUP COMPLETE");
+
+  LTBL(B01000000);
 }
   
  
   
 void loop() 
 {
-   
-shiftOut(SER,SRCLK,MSBFIRST,B00000000);
-   if (ButtonZero == HIGH);
-    digitalWrite(RCLK, LOW);
-    shiftOut(SER,SRCLK,MSBFIRST,B11111111);
-    digitalWrite(RCLK, HIGH);
-    delay(500);
-    shiftOut(SER,SRCLK,MSBFIRST,B00000000);
+
+//if (digitalRead(ButtonZero) == HIGH){
+//    Serial.println("Button is high");
+//    digitalWrite(RCLK, LOW);
+//    shiftOut(SER,SRCLK,MSBFIRST,B10000000);
+//    digitalWrite(RCLK, HIGH);
+//    delay(50);
+//  }
+
+
+    LTBL(B10000000);
+
+
 }
 
 
