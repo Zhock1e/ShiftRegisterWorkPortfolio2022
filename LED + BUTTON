@@ -1,0 +1,106 @@
+//WOO made it this far.... so far 🎺🎺
+//This code will be testing LEDs turning on when the corresponding button is pressed. code is going to be a lil brute force esk.
+  
+
+int LatchPin = 5;  // Latch pin of 74HC595 is connected to Digital pin 5
+int ClockPin = 6; // Clock pin of 74HC595 is connected to Digital pin 6
+int DataPin = 4;  // Data pin of 74HC595 is connected to Digital pin 4
+
+const int ButtonZero = 12; 
+const int ButtonUn = 11; 
+const int ButtonDeux = 10;
+const int ButtonTrois = 9;
+const int ButtonQuatre = 8;
+const int ButtonCinq = 7;
+const int ButtonSix = 6;
+const int ButtonSept = 5;
+
+byte LEDs = 0;
+
+
+
+void setup() {
+Serial.begin(9600);
+pinMode(DataPin, OUTPUT);
+pinMode(ClockPin, OUTPUT);
+pinMode(LatchPin, OUTPUT);
+
+pinMode(ButtonZero, INPUT_PULLUP); 
+pinMode(ButtonUn, INPUT_PULLUP);
+pinMode(ButtonDeux, INPUT_PULLUP);
+pinMode(ButtonTrois, INPUT_PULLUP);
+pinMode(ButtonQuatre, INPUT_PULLUP);
+pinMode(ButtonCinq, INPUT_PULLUP);
+pinMode(ButtonSix, INPUT_PULLUP);
+pinMode(ButtonSept, INPUT_PULLUP);
+  
+  
+ void setup() 
+{
+  Serial.begin(9600);
+  // Set all the pins of 74HC595 as OUTPUT
+  pinMode(LatchPin, OUTPUT);
+  pinMode(DataPin, OUTPUT);  
+  pinMode(ClockPin, OUTPUT);
+  
+ 
+  
+  
+void loop() 
+{
+  LEDs = 0b00000000; // Initially turns all the LEDs off, by giving the variable 'leds' the value 0
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(2000);
+
+  LEDs = 0b11110000;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(2000);
+  
+  LEDs = 0b00001111;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(2000);
+  
+  LEDs = 0b11111111;
+  updateShiftRegister();
+  Serial.println(LEDs);
+  delay(2000);
+}
+
+/*
+ * updateShiftRegister() - This function sets the latchPin to low, then calls the Arduino function 'shiftOut' to shift out contents of variable 'leds' in the shift register before putting the 'latchPin' high again.
+ */
+void updateShiftRegister()
+{
+   digitalWrite(LatchPin, LOW);
+   shiftOut(DataPin, ClockPin, LSBFIRST, LEDs);
+   digitalWrite(LatchPin, HIGH);
+}
+
+
+
+//
+// ** Code for buttons to light LED **
+//
+
+const int LED = 9;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(9, OUTPUT);
+}
+
+void loop() {
+  //read the pushbutton value into a variable
+  int sensorVal = digitalRead(2);
+  //print out the value of the pushbutton
+  Serial.println(sensorVal);
+  if (sensorVal == HIGH) {
+    digitalWrite(LED, LOW);
+  } else {
+    digitalWrite(LED, HIGH);
+  }
+  }
