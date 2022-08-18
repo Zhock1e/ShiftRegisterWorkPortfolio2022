@@ -12,6 +12,109 @@ const int ButtonCinq = 7;
 const int ButtonSix = 6;
 const int ButtonSept = 5;
 
+
+
+byte LEDs = 0;
+
+void LTBL(byte LEDByte) {//Let there be light heh
+
+    digitalWrite(RCLK, LOW);
+    shiftOut(SER,SRCLK,MSBFIRST,LEDByte);
+    digitalWrite(RCLK, HIGH);
+    delay(500);
+    //Serial.println("LTBL IS BEING CALLED"); //This was to test whether the defined function was being correctly called
+}
+
+
+void setup() {
+Serial.begin(9600);
+  pinMode(SER, OUTPUT);
+  pinMode(RCLK, OUTPUT);
+  pinMode(SRCLK, OUTPUT);
+  pinMode(SRCLR, OUTPUT);
+
+  pinMode(ButtonZero, INPUT); 
+  pinMode(ButtonUn, INPUT);
+  pinMode(ButtonDeux, INPUT_PULLUP);
+  pinMode(ButtonTrois, INPUT_PULLUP);
+  pinMode(ButtonQuatre, INPUT_PULLUP);
+  pinMode(ButtonCinq, INPUT_PULLUP);
+  pinMode(ButtonSix, INPUT_PULLUP);
+  pinMode(ButtonSept, INPUT_PULLUP);
+//
+//  // I have made the light sequence run once the arduino is on:
+//  int level = 8;
+//  int sequence[level] = {5, 1, 0, 7, 2, 4, 6, 2}; // Arbitrary sequence that is challenging and uses all of the LEDs
+//  shiftOut(SER,SRCLK,MSBFIRST,B00000000); //Set the LEDs blank
+//  
+//    for (int i = 0; i < level; i++) {
+//      byte current_led = 0;
+//      bitSet(current_led, sequence[i]);
+//      
+//    Serial.println(sequence[i]);
+//    Serial.println(current_led);
+//    Serial.println("");
+//
+//    LTBL(current_led); //usign the /Let There Be Light/ function I made.
+//    LTBL(B00000000);
+//
+//  }
+//  
+
+
+  LTBL(B01000000);
+}
+  
+ 
+  
+void loop() 
+{
+
+//if (digitalRead(ButtonZero) == HIGH){
+//    Serial.println("Button is high");
+//    digitalWrite(RCLK, LOW);
+//    shiftOut(SER,SRCLK,MSBFIRST,B10000000);
+//    digitalWrite(RCLK, HIGH);
+//    delay(50);
+//  }
+
+  LTBL(B00010000);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//**//
+
+const int SER = 4; // Data
+const int RCLK = 5; // Register Clock
+const int SRCLK = 6; // Latch
+const int SRCLR = 3; // Serial Clear
+
+const int ButtonZero = 12; 
+const int ButtonUn = 11; 
+const int ButtonDeux = 10;
+const int ButtonTrois = 9;
+const int ButtonQuatre = 8;
+const int ButtonCinq = 7;
+const int ButtonSix = 6;
+const int ButtonSept = 5;
+
 byte LEDs = 0;
 
 void LTBL(byte LEDByte) {//Let there be light heh
