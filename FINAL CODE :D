@@ -1,0 +1,115 @@
+const int DATA_PIN = 2; // Data
+const int LATCH_PIN = 3; // Latch
+const int CLOCK_PIN = 4; // Register Clock
+
+const int BUTTON_PIN_ZERO = 6; //First button in pin 6 
+const int BUTTON_PIN_UN = 7; //First button in pin 6 
+const int BUTTON_PIN_DEUX = 8; //First button in pin 6 
+const int BUTTON_PIN_TROIS = 9; //First button in pin 6 
+const int BUTTON_PIN_QUATRE = 10; //First button in pin 6 
+const int BUTTON_PIN_CINQ = 11; //First button in pin 6 
+const int BUTTON_PIN_SEPT = 12; //First button in pin 6 
+const int BUTTON_PIN_HUIT = 13; //First button in pin 6 
+
+const int BUTTON_PINS[] = {BUTTON_PIN_ZERO, BUTTON_PIN_UN, BUTTON_PIN_DEUX ,BUTTON_PIN_TROIS, BUTTON_PIN_QUATRE, BUTTON_PIN_CINQ, BUTTON_PIN_SEPT, BUTTON_PIN_HUIT};
+
+const int LEVEL = 8;
+int sequence[LEVEL] = {0, 5, 3, 7, 2, 4, 8, 1};
+
+
+
+byte LEDbyte;
+
+
+void LTBL(byte value) {//Let there be light heh
+    digitalWrite(LATCH_PIN, LOW);
+    shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, value);
+    digitalWrite(LATCH_PIN, HIGH);
+    delay(500);
+}
+
+//int [] because it is an array of ints
+void play_sequence(int level, int sequence[]){ 
+  for (int i = 0; i < level; i++){
+    int led_no = sequence[i];
+    LEDbyte = 0;
+    bitSet(LEDbyte, led_no);
+    LTBL(LEDbyte);
+  }
+  LTBL(0B00000000);  
+}
+
+int Get_User_Input(){
+  int CURRENT_PIN = -1;
+  
+  while (CURRENT_PIN == -1){
+    Serial.println("Waiting for user input");
+    for (int i = 0; i < 8; i++){
+      if (digitalRead(BUTTON_PINS[i]) == HIGH){
+        CURRENT_PIN = BUTTON_PINS[i];
+        break;
+      }
+    }
+  }
+
+  byte current_led;
+  bitSet(current_led, CURRENT_PIN - 6);
+  LTBL(current_led);
+  LTBL(0B00000000);
+  
+  return CURRENT_PIN;
+}
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(DATA_PIN, OUTPUT);
+  pinMode(LATCH_PIN, OUTPUT);
+  pinMode(CLOCK_PIN, OUTPUT);
+
+  for (int i = 0; i < 8; i++){
+    pinMode(BUTTON_PINS[i], INPUT);
+  }
+
+  // set up the game
+  play_sequence(LEVEL, sequence);
+}
+
+void loop() {
+
+  int player_won = 1;
+  
+  for (int i = 0; i < LEVEL; i++) {
+    int target = sequence[i];
+    int CURRENT_PIN = Get_User_Input();
+    
+    
+    if (CURRENT_PIN - 6 == target){
+      Serial.println("You got it right! Keep going 👏🎉");
+      delay(1000);
+    }
+    else {
+      Serial.println("You're wrong :(((");
+      player_won = 0;
+      break;
+    }
+  }
+
+  if (player_won == HIGH){
+    Serial.println("You won the game!");
+    delay(1000);
+  } else {
+    Serial.println("You lost the game");
+    LTBL(0B11111111);
+    delay(200);
+    LTBL(0B00000000);
+    delay(200);
+    LTBL(0B11111111);
+    delay(200);
+    LTBL(0B00000000);
+    delay(2500);
+    play_sequence(LEVEL, sequence);
+  }
+
+
+}
