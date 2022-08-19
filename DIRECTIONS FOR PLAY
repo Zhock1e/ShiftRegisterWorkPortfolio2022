@@ -1,0 +1,15 @@
+# ShiftRegisterWorkPortfolio2022
+Work portfolio assessment for year 11 mechatronics. Assignment 3 S2 Q3
+
+DIRECTIONS FOR PLAY
+
+Get up Serial Monitor for some encouragment and undertsanding of the code and game.
+Once the arduino is powered a preloaded code will start a light sequence
+The serial monitor will be serial printing "Waiting for user input" until a button is pressed
+You will need to replicate the lights by pressing the parralel corresponding buttons and holding them down until the corresponding LED turns on.
+if your input is correct the serial monitor will print "You got it right! Keep going 👏🎉" 
+else //aha
+The serial monitor will print "You're wrong :(((" and flash all of the LEDs wice
+shortly after the sequence will play again for your next try
+
+GOODLUCK! 
