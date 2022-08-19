@@ -13,16 +13,16 @@ const int BUTTON_PIN_HUIT = 13; //First button in pin 6
 
 const int BUTTON_PINS[] = {BUTTON_PIN_ZERO, BUTTON_PIN_UN, BUTTON_PIN_DEUX ,BUTTON_PIN_TROIS, BUTTON_PIN_QUATRE, BUTTON_PIN_CINQ, BUTTON_PIN_SEPT, BUTTON_PIN_HUIT};
 
+//I am creating my memory sequence through the use of an array of ints.
 const int LEVEL = 8;
-int sequence[LEVEL] = {0, 5, 3, 7, 2, 4, 8, 1};
-
-
+int sequence[LEVEL] = {0, 5, 3, 7, 2, 4, 6, 1};
 
 byte LEDbyte;
 
 
+
 void LTBL(byte value) {//Let there be light heh
-    digitalWrite(LATCH_PIN, LOW);
+    digitalWrite(LATCH_PIN, LOW); 
     shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, value);
     digitalWrite(LATCH_PIN, HIGH);
     delay(500);
@@ -61,7 +61,7 @@ int Get_User_Input(){
 }
 
 void setup() {
-  // put your setup code here, to run once:
+  // The sequence is played once the Arduino is on.
   Serial.begin(9600);
   pinMode(DATA_PIN, OUTPUT);
   pinMode(LATCH_PIN, OUTPUT);
@@ -95,9 +95,26 @@ void loop() {
     }
   }
 
-  if (player_won == HIGH){
+  if (player_won == HIGH){ //can be changed to LOW to easily test whether teh func is being sucessfully called :)
     Serial.println("You won the game!");
-    delay(1000);
+    delay(500);
+    LTBL(0B00000000);
+    LTBL(0B10000000);
+    LTBL(0B11000000);
+    LTBL(0B11100000);
+    LTBL(0B11110000);
+    LTBL(0B11111000);
+    LTBL(0B11111100);
+    LTBL(0B11111110);
+    LTBL(0B11111111);
+    LTBL(0B11111110);
+    LTBL(0B11111100);
+    LTBL(0B11111000);
+    LTBL(0B11110000);
+    LTBL(0B11100000);
+    LTBL(0B11000000);
+    LTBL(0B10000000);
+    LTBL(0B00000000);
   } else {
     Serial.println("You lost the game");
     LTBL(0B11111111);
@@ -113,3 +130,5 @@ void loop() {
 
 
 }
+
+
